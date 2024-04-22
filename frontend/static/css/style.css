@@ -1,0 +1,144 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css');
+
+*{
+	font-family: 'Open Sans', 'sans-serif', 'FontAwesome';
+}
+body{
+    background: rgb(52, 56, 61);
+}
+h1{
+	color: rgb(255, 255, 255);
+	margin: 20px auto 0;
+	width: 200px;
+	text-align: center;
+}
+h2 {
+    color: white;
+}
+span {
+    display: block;
+    margin-top: 20px;
+    border-top: solid 2px white;
+    box-sizing: border-box;
+    padding-top: 10px;
+}
+li {
+    color: white; 
+}
+#wrapper{
+	position: absolute;
+	width: 320px;
+	left: 50%;
+	margin-left: -160px;
+	top: 50%;
+	margin-top: -75px;
+}
+#content {
+    position: absolute;
+	width: 320px;
+	left: 50%;
+	margin-left: -160px;
+	margin-top: 50px;   
+}
+
+#code_form, #signin {
+    height: 90px;
+    width: 300px;
+    border-radius: 8px;
+    position: relative;
+}
+
+#code_form::before, #signin::before {
+    display: block;
+    position: relative;
+    height: 2px;
+    background: rgb(52, 56, 61);
+    content: '';
+    top: 44px;
+    margin-left: 20px;
+    z-index: 1;
+}
+
+#code_form input:first-of-type, #signin input:first-of-type {
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+#code_form input:last-of-type, #signin input:last-of-type {
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+#code_form input[type="text"], #code_form input[type="password"], #signin input[type="text"], #signin input[type="password"], #code_form button[type="submit"], #signin button[type="submit"] {
+    background: rgb(28, 30, 33);
+    box-shadow: inset -100px -100px 0 rgb(28, 30, 33); /*Prevent yellow autofill color*/
+    color: rgb(52, 56, 61);
+}
+
+#code_form input[type="text"], #code_form input[type="password"], #signin input[type="text"], #signin input[type="password"] {
+    position: relative;
+    display: block;
+    width: 280px;
+    height: 45px;
+    border: 0;
+    outline: 0;
+    top: -2px;
+    padding: 0 0 0 20px;
+    font-weight: 700;
+}
+
+#code_form input[type="text"]:focus, #code_form input[type="password"]:focus, #signin input[type="text"]:focus, #signin input[type="password"]:focus {
+    color: rgb(255, 255, 255);
+}
+
+#code_form button[type="submit"], #signin button[type="submit"] {
+    display: block;
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    color: rgb(52, 56, 61);
+    border-radius: 50px;
+    outline: 0;
+    z-index: 2;
+    top: 19px;
+    right: -24px;
+    border: 6px solid rgb(52, 56, 61);
+    font-size: 25px;
+    text-indent: 0px;
+    padding-left: 9px;
+    padding-bottom: 3px;
+    text-align: center;
+}
+
+#code_form button[type="submit"]:hover, #signin button[type="submit"]:hover {
+    color: rgb(0, 126, 165);
+    text-shadow: 0 0 10px rgb(0, 126, 165);
+    cursor: pointer;
+}
+
+#code_form p, #signin p {
+    color: rgb(79, 85, 97);
+    padding: 0 20px;
+    font-weight: 700;
+    font-size: 12px;
+    margin: 5px 0 0 0;
+}
+
+#code_form p > a, #signin p > a {
+    color: rgb(111, 119, 135);
+    text-decoration: none;
+}
+
+#code_form p > a:hover, #signin p > a:hover {
+    border-bottom: 1px solid;
+}
+#addUserButton {
+    margin-left: 50px;
+    width: 100px;
+    height: 40px;
+    color: white;
+    background-color: rgb(44, 43, 43);
+    cursor: pointer;
+    border: none;
+}

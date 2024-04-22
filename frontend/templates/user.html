@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ТЗ</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <script src="{% static 'js/index.js' %}"></script>
+</head>
+<body>
+  <h1>Profile</h1>
+  <div id="content">
+        
+  </div>
+  <button type="submit" id="addUserButton">Add user</button>
+
+</body>
+<script>
+var token = localStorage.getItem('token');
+
+var headers = {
+    'Authorization': 'Bearer ' + token,
+    'Content-Type': 'application/json'
+};
+
+fetch('http://saran123.pythonanywhere.com/api/profile/', {
+    method: 'GET',
+    headers: headers
+})
+.then(response => {
+    if (!response.ok) {
+        if (response.status === 401) {
+            var userDataDiv = document.getElementById('content');
+            userDataDiv.innerHTML = '<p>You must be logged in to view this content.</p>';
+        } else {
+            throw new Error('Error ' + response.status + ': ' + response.statusText);
+        }
+    }
+    return response.json();
+})
+.then(data => {
+    var userDataDiv = document.getElementById('content');
+    userDataDiv.innerHTML = '';
+
+    var numbersParagraph = document.createElement('h2');
+    numbersParagraph.textContent = 'Numbers: ' + data.numbers;
+    var codeParagraph = document.createElement('h2');
+    codeParagraph.textContent = 'Code: ' + data.code;
+
+    userDataDiv.appendChild(numbersParagraph);
+    userDataDiv.appendChild(codeParagraph);
+
+    fetch('http://saran123.pythonanywhere.com/api/all/user/invited/', {
+        method: 'GET',
+        headers: headers
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error ' + response.status + ': ' + response.statusText);
+        }
+        return response.json();
+    })
+   .then(numbersData => {
+    var userDataDiv = document.getElementById('content');
+    userDataDiv.innerHTML = '';
+
+    var numbersParagraph = document.createElement('h2');
+    numbersParagraph.textContent = 'Numbers: ' + data.numbers;
+    var codeParagraph = document.createElement('h2');
+    codeParagraph.textContent = 'Code: ' + data.code;
+
+    userDataDiv.appendChild(numbersParagraph);
+    userDataDiv.appendChild(codeParagraph);
+
+    var numbersDiv = document.createElement('span');
+    numbersDiv.innerHTML = '<h2>Invited Numbers:</h2>';
+
+    var numbersList = document.createElement('ul');
+
+    numbersData.numbers.forEach(number => {
+        var listItem = document.createElement('li');
+        listItem.textContent = number;
+        numbersList.appendChild(listItem);
+    });
+
+    numbersDiv.appendChild(numbersList);
+
+    userDataDiv.appendChild(numbersDiv);
+})
+.catch(error => {
+    console.error('Error fetching invited numbers:', error);
+});
+})
+.catch(error => {
+    console.error('Error:', error);
+});
+
+document.getElementById('addUserButton').addEventListener('click', function() {
+    window.location.href = 'http://saran123.pythonanywhere.com/link_user/';
+});
+</script>
+</html>

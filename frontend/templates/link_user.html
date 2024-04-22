@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ТЗ</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <h1>Add User Code</h1>
+  <div id="wrapper">
+    <form id="code_form" method="POST">
+      {% csrf_token %}
+      <input type="text" id="code" name="code" placeholder="invite_code" />
+      <button type="submit">&#xf0da;</button>
+    </form>
+  </div>
+</body>
+<script>
+document.getElementById("code_form").addEventListener("submit", function(event) {
+  event.preventDefault();
+  var token = localStorage.getItem('token');
+
+  var headers = {
+      'Authorization': 'Bearer ' + token,
+      'Content-Type': 'application/json',
+      "X-CSRFToken": getCookie("csrftoken"),
+  };
+  var formData = { invite_code: document.getElementById("code").value };
+  fetch("http://saran123.pythonanywhere.com/api/link/", {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(formData)
+  })
+  .then(response => {
+      if (!response.ok) {
+        throw new Error('Ошибка 400: Неправильный запрос');
+      }
+      return response.json();
+  })
+  .then(data => {
+    console.log(data);
+    // Не удаляем токен из локального хранилища
+    window.location.href = "http://saran123.pythonanywhere.com/user/";
+  })
+  .catch(error => {
+    if (error.status === 400) {
+      alert("Ошибка 400: Неправильный запрос");
+    }
+  });
+});
+
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + "=")) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+
+</script>
+</html>

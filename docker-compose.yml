@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  database:
+    image: postgres:14.1
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    networks:
+      - dev-network
+
+  backend:
+    container_name: "backend"
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database
+    volumes:
+      - static:/backend/static
+    networks:
+      - dev-network
+
+volumes:
+  static:
+
+networks:
+  dev-network:
+    driver: bridge
